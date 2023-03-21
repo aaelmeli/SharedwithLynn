@@ -1,0 +1,43 @@
+
+Framework Information:
+MOOSE Version:           git commit 32993644eb on 2021-11-25
+LibMesh Version:         
+PETSc Version:           3.15.1
+SLEPc Version:           3.15.1
+Current Time:            Mon Mar 21 15:08:46 2022
+Executable Timestamp:    Mon Mar 21 14:57:08 2022
+
+Parallelism:
+  Num Processors:          1
+  Num Threads:             1
+
+Mesh: 
+  Parallel Type:           replicated
+  Mesh Dimension:          2
+  Spatial Dimension:       2
+  Nodes:                   3721
+  Elems:                   3600
+  Num Subdomains:          1
+
+Nonlinear System:
+  Num DOFs:                7442
+  Num Local DOFs:          7442
+  Variables:               { "dummy2" "dummy3" } 
+  Finite Element Types:    "LAGRANGE" 
+  Approximation Orders:    "FIRST" 
+
+Auxiliary System:
+  Num DOFs:                90121
+  Num Local DOFs:          90121
+  Variables:               "dummy" { "eps_rr_xx" "eps_rr_yy" "eps_rr_xy" "eps_ii_xx" "eps_ii_yy" ... 
+                             "sigma_ri_yy" "sigma_ri_xy" "sigma_ir_xx" "sigma_ir_yy" "sigma_ir_xy" } { "strain_stress" 
+                             "integral_strain_stress" } 
+  Finite Element Types:    "LAGRANGE" "MONOMIAL" "MONOMIAL" 
+  Approximation Orders:    "FIRST" "CONSTANT" "FIRST" 
+
+Execution Information:
+  Executioner:             Steady
+  Solver Mode:             Linear
+  MOOSE Preconditioner:    SMP (auto)
+
+[32m Solve Skipped![39m
