@@ -14,24 +14,26 @@ inputs.mooseadjointdirectory='_adjoint_viscoelastic_waves';
 inputs.moosegradientdirectory='grad_computation_viscoelastic_waves';
 
 inputs.materialfilename=["storage_modulus_dist.txt";"loss_modulus_dist.txt"];% the file the allways has material distribution - parameters estimates 
-inputs.omega_bar=15000; % needed to compute G= G_eff *(1+ i*omega/omega_bar, G_r=G_eff*1, G_i=G_eff*omega/omega_bar
+inputs.omega_bar=150000; % needed to compute G= G_eff *(1+ i*omega/omega_bar, G_r=G_eff*1, G_i=G_eff*omega/omega_bar
 inputs.mesh.dim=3;
-inputs.mesh.nx=20;
-inputs.mesh.ny=20;
-inputs.mesh.nz=20;
+inputs.mesh.nx= 30;
+inputs.mesh.ny = 30;
+inputs.mesh.nz = 30;
 inputs.mesh.xmin=0;
 inputs.mesh.ymin=0;
 inputs.mesh.zmin=0;
 inputs.mesh.xmax=0.03;
 inputs.mesh.ymax=.03;
 inputs.mesh.zmax=.03;
-inputs.nrcv=315; % number of receivers
-% inputs.nrcv=192; % number of receivers
+inputs.nrcv = 713; % number of receivers
+% inputs.nrcv = 176; % number of receivers
+% inputs.nrcv = 2623; % number of receivers
+% inputs.nrcv=315; % number of receivers
 inputs.mesh.dx=(inputs.mesh.xmax-inputs.mesh.xmin)/inputs.mesh.nx;
 inputs.mesh.dy=(inputs.mesh.ymax-inputs.mesh.ymin)/inputs.mesh.ny;
 inputs.mesh.dz=(inputs.mesh.zmax-inputs.mesh.zmin)/inputs.mesh.nz;
 
-inputs.freqs=200:25:300; %the frequency range, in Hz.
+inputs.freqs=100:50:500; %the frequency range, in Hz.
 output.wavefieldoutputfilename_real='_wavefield_real_rcv_0002.csv'; %name of the file that contains the synthetic/forward real wavefield
 output.wavefieldoutputfilename_imag='_wavefield_imag_rcv_0002.csv'; %name of the file that contains the syntheticpa/forward imaginary wavefield
 output.wavefieldoutputdirectoryname='3D_synthetic_viscoelastic_waves';
@@ -39,7 +41,7 @@ output.wavefieldoutputdirectoryname='3D_synthetic_viscoelastic_waves';
 
 %initial parameters
 
-nx=20;nz=20;ny=20;
+nx = inputs.mesh.nx; nz = inputs.mesh.nz; ny = inputs.mesh.ny;
 inputs.nparamx=nx;
 inputs.nparamz=nz;
 inputs.nparamy=ny;
@@ -58,8 +60,11 @@ velocity = 25*ones(nx,ny,nz);
 x0 = xmax/2;
 z0 = zmax/2;
 y0 = ymax/2;
-r0 = 0.007;
+r0 = 0.004;
 R=r0; %this is the radius of the R.O.I, this contains the parameters to be considered in inversion
+filename_param1 = 'initial_guess.txt';
+runcmd = ['/home/elmeabde/sawtooth1/projects/matlabMooseWrapper/matlab_and_moose/' filename_param1 ''];
+initial_guess1 = readmatrix(runcmd);
 ind = sqrt((X-x0).^2+(Y-y0).^2+(Z-z0).^2) <= r0;
 ind_inversion=sqrt((X-x0).^2+(Y-y0).^2+(Z-z0).^2) <= R;% indicies of the inversion parameters.
 map_param = zeros(nx,ny,nz);
@@ -88,13 +93,7 @@ for k=1:nz
         end
     end
 end
-%initial guess
-params0=50.*ones(nparam,1);
-% params0=[1:1:8]';
-% for (i=1:616)
-%     row=parameters_map(i,1); column=parameters_map(i,2);
-%     velocity(row,column)=params0(i);
-% end
+
 ind =sqrt((X-x0).^2+(Y-y0).^2+(Z-z0).^2) <= R;
 inputs.velocity=velocity;
 inputs.velocity(ind)=-1;
@@ -108,9 +107,25 @@ for k=1:nz
         params=[params;row'];
     end    
 end
+
 parameter_index_vector=find(params==-1);
 inputs.parameter_index_vector=parameter_index_vector;
+%initial guess
+% params0 = 25 .* ones(nparam, 1);
+params0 = initial_guess1(parameter_index_vector);
+nparam0found=length(params0);
+display(nparam0found);
+
+avgEinclusion = mean(params0);
+display(avgEinclusion);
+params0 = avgEinclusion .* ones(nparam, 1);
+% params0=[1:1:8]';
+% for (i=1:616)
+%     row=parameters_map(i,1); column=parameters_map(i,2);
+%     velocity(row,column)=params0(i);
+% end
 inputs.params0=params0;
+
 param=80.*ones(nparam,1);
 % param=[1:1:8]';
 

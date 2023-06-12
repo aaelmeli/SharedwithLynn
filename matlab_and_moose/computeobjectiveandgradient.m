@@ -27,14 +27,16 @@ writematerialfile(params,2*pi()*frequncy,Inputs); %do I need to pass the labinde
 %convert the parameters file from dos to unix format
 filename.storage=storage_filename;
 filename.loss=loss_filename;
-convertdos2unix(filename);%storage
+copy2mooseproj(filename); %storage
 % convertdos2unix(loss_filename);%loss
 % %copy the material file to moose application directory
 % copy2linux(storage_filename);%storage
 % copy2linux(loss_filename);%loss
 sytheticdata_freq.real=Syntheticdata.real(:,labindex);
 sytheticdata_freq.imag=Syntheticdata.imag(:,labindex);
+
 executemoose(forwardinputfilename,frequncy);%solve for the forward solution
+
 
 % Inside the following function, call another function to read the output wavefield, then use it to compute the objective function value
 function_value=function_value+computeobjectivevalue(labindex,Inputs.mooseforwarddirectory,Output,sytheticdata_freq);%pass labindex, only compute the corresponding objective function

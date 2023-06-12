@@ -11,6 +11,8 @@ data=zeros(nrcv,1);
 
     storage_filename=inputs.materialfilename(1);
     loss_filename=inputs.materialfilename(2);
+        % storage_derivative_filename = inputs.materialderivativefilename(1);
+        % loss_derivative_filename = inputs.materialderivativefilename(2);
     syntheticinputfilename=inputs.moosesyntheticinputfilename;
     
 freqs=inputs.freqs;
@@ -23,27 +25,32 @@ frequncy=freqs(labindex);
 %write the parameters file.
 writematerialfile(params,2*pi()*frequncy,Inputs); %do I need to pass the labindex as well
 %convert the parameters file from dos to unix format
+%get the current material (parameters) distribution file
 filename.storage=storage_filename;
 filename.loss=loss_filename;
-convertdos2unix(filename);%converts storage and loss files to unix and transfer them to windows 
-% convertdos2unix(loss_filename);%loss
-% % %copy the material file to moose application directory
-% copy2linux(storage_filename);%storage
-% copy2linux(loss_filename);%loss
+%get the derivative of the current material with respect to the parameter
+% filename.storagederivative = storage_derivative_filename;
+% filename.lossderivative = loss_derivative_filename;
 
+copy2mooseproj(filename); %converts storage and loss files to unix and transfer them to windows
+%here, we can add more pushes so that we invert for all the pushes simultaneously
 executemoose(syntheticinputfilename,frequncy);
-% copy2windows(Output);
-
+%get the real
 data=readwavefieldoutput(Inputs.moosesyntheticdirectory,Output.wavefieldoutputfilename_real);
-% data=[data{:}];
-real_temp=data(:,1);
+real_proci=data(:,1);
+%get the imag
 data=readwavefieldoutput(Inputs.moosesyntheticdirectory,Output.wavefieldoutputfilename_imag);
-imag_temp=data(:,1);
-complex_temp=real_temp+1i.*imag_temp;
-data(:,1)=awgn(complex_temp,10,'measured'); %add additive white gaussian
-real_(:,labindex)=real(data(:,1));
-imag_(:,labindex)=imag(data(:,1));
-Real=gcat(real_(:,labindex));% all processors have same combined matirx (this is similar to sending and receiving data across all workers).
+imag_proci = data(:, 1);
+%combine real and imaginary to get the complex wavefield
+synth = real_proci + 1i .* imag_proci;
+%you may add some awgn noise
+% synth= awgn(synth, 10, 'measured'); %add additive white gaussian
+
+%collect the data based on the labindex (or the processors number)
+real_(:, labindex) = real(synth(:, :));
+imag_(:, labindex) = imag(synth(:, :));
+%make all the processors have the same data (entire wavefield over all processors)
+Real=gcat(real_(:,labindex));
 Imag=gcat(imag_(:,labindex));
 
 end

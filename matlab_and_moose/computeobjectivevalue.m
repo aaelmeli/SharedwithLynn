@@ -8,19 +8,13 @@ char1='_freq';
 char2=int2str(labindex);
 directoryname=append(char1,char2);
 
-bashcmd = 'bash -c '; % WSL
-runcmd = ['"cd /home/aaelmeli/projects/first_test/' directoryname '/' mooseforwarddirectory ' && cp  ' Output.wavefieldoutputfilename_real ' ' Output.wavefieldoutputfilename_imag ' /mnt/e/3D_SWE_MOOSE/matlab_and_moose/' directoryname '/ > NULL "'];
-status = system([bashcmd runcmd]); 
-if (status ~= 0)
-    error(['Run bash cmd error: ' num2str(status)]);
-end
-% % ... - this for imaginary
-% bashcmd = 'bash -c '; % WSL
-% runcmd = ['"cd /home/aaelmeli/projects/first_test/' directoryname '/' mooseforwarddirectory ' && cp  ' Output.wavefieldoutputfilename_imag ' /mnt/e/3D_SWE_MOOSE/matlab_and_moose/' directoryname ' > NULL "'];
-% status = system([bashcmd runcmd]); 
-% if (status ~= 0)
-%     error(['Run bash cmd error: ' num2str(status)]);
-% end
+runcmd = ['cd /home/elmeabde/sawtooth1/projects/first_test/' directoryname '/' mooseforwarddirectory ' && cp  ' Output.wavefieldoutputfilename_real ' ' Output.wavefieldoutputfilename_imag ' /home/elmeabde/sawtooth1/projects/matlabMooseWrapper/matlab_and_moose/' directoryname '/ > NULL '];
+    [status, cmderrmsg] = unix(runcmd);
+
+    if (status ~= 0)
+        error(['Run bash cmd error: ' num2str(status) ' ' cmderrmsg]);
+    end
+
 [wavefieldatreceivers]=readwavefieldoutput(mooseforwarddirectory,Output.wavefieldoutputfilename_real);
 forward_data_real=wavefieldatreceivers(:,1);
 

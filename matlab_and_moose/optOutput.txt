@@ -1,0 +1,81 @@
+MATLAB is selecting SOFTWARE OPENGL rendering.
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2023 The MathWorks, Inc.
+             R2023a Update 1 (9.14.0.2239454) 64-bit (glnxa64)
+                               March 30, 2023
+
+Warning: X does not support locale en_US.UTF-8
+ 
+To get started, type doc.
+For product information, visit www.mathworks.com.
+ 
+>> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> 
+nparam0found =
+
+   280
+
+>> >> >> 
+avgEinclusion =
+
+   56.1363
+
+>> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> Starting parallel pool (parpool) using the 'Processes' profile ...
+Connected to parallel pool with 48 workers.
+>> >> >> >> Elapsed time is 421.572271 seconds.
+>> >> >> >> >> >>                                                         First-order 
+ Iteration  Func-count       f(x)        Step-size       optimality
+     0           1         0.173492                      0.000148
+     1           8          0.10822        52326.1       9.01e-05  
+     2           9        0.0225892              1       2.71e-05  
+     3          10        0.0065257              1       9.14e-06  
+     4          11        0.0031096              1       4.65e-06  
+     5          12       0.00257674              1       4.91e-06  
+     6          13       0.00219204              1       4.64e-06  
+     7          14       0.00173497              1       4.09e-06  
+     8          15       0.00146122              1       3.52e-06  
+     9          16       0.00133658              1       2.45e-06  
+    10          17       0.00124502              1       2.28e-06  
+    11          18       0.00116493              1       2.01e-06  
+    12          19       0.00110683              1       1.94e-06  
+    13          20       0.00107526              1        1.5e-06  
+    14          21       0.00105451              1       1.58e-06  
+    15          22       0.00102673              1       1.58e-06  
+    16          23      0.000998908              1       1.22e-06  
+    17          24      0.000983927              1       1.04e-06  
+    18          25      0.000977507              1       1.31e-06  
+    19          26      0.000971797              1       1.25e-06  
+                                                        First-order 
+ Iteration  Func-count       f(x)        Step-size       optimality
+    20          27      0.000963582              1       8.75e-07  
+    21          28      0.000953898              1       8.83e-07  
+    22          29      0.000946685              1       1.03e-06  
+    23          30      0.000942787              1       8.94e-07  
+    24          31      0.000939778              1       6.94e-07  
+    25          32       0.00093495              1       5.58e-07  
+    26          33       0.00092797              1       8.47e-07  
+    27          34      0.000920784              1       1.06e-06  
+    28          35      0.000916168              1       8.65e-07  
+    29          36      0.000913987              1       4.33e-07  
+    30          37       0.00091293              1       2.99e-07  
+    31          38      0.000911996              1       4.47e-07  
+    32          39      0.000910579              1       7.42e-07  
+    33          40      0.000907981              1       9.63e-07  
+    34          41      0.000903508              1        1.1e-06  
+    35          42      0.000898065              1       8.77e-07  
+    36          43      0.000894186              1       4.87e-07  
+    37          44      0.000891982              1       4.49e-07  
+    38          45       0.00089021              1       5.74e-07  
+    39          46      0.000887783              1       6.41e-07  
+                                                        First-order 
+ Iteration  Func-count       f(x)        Step-size       optimality
+    40          47       0.00088402              1       5.61e-07  
+    41          48      0.000880211              1       4.23e-07  
+
+Solver stopped prematurely.
+
+fminunc stopped because it exceeded the iteration limit,
+options.MaxIterations = 4.000000e+01.
+
+>> Elapsed time is 41227.361479 seconds.
+>> Parallel pool using the 'Processes' profile is shutting down.
